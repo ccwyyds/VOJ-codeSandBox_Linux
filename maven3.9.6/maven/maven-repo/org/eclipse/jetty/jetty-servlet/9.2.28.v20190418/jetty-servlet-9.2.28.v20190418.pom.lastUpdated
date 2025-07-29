@@ -1,4 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon Mar 24 11:44:43 CST 2025
-http\://maven.aliyun.com/nexus/content/groups/public/.error=Could not transfer artifact org.eclipse.jetty\:jetty-servlet\:pom\:9.2.28.v20190418 from/to nexus-aliyun (http\://maven.aliyun.com/nexus/content/groups/public)\: F\:\\maven\\maven3.9.6\\maven\\maven-repo\\org\\eclipse\\jetty\\jetty-servlet\\9.2.28.v20190418\\jetty-servlet-9.2.28.v20190418.pom.7710940783952747030.tmp -> F\:\\maven\\maven3.9.6\\maven\\maven-repo\\org\\eclipse\\jetty\\jetty-servlet\\9.2.28.v20190418\\jetty-servlet-9.2.28.v20190418.pom
-@default-nexus-aliyun-http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742787883911

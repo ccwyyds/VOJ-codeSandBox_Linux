@@ -1,5 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Tue Mar 18 23:50:35 CST 2025
-http\://0.0.0.0/.error=Could not transfer artifact org.apache.httpcomponents\:httpclient\:jar\:4.5.13 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [public (http\://maven.aliyun.com/nexus/content/groups/public/, default, releases+snapshots)]
-@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1742313034566
-http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742313035547
