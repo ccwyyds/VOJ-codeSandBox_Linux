@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Fri Jun 27 16:29:51 CST 2025
+spring-boot-starter-tomcat-3.3.13.jar>nexus-aliyun=
+spring-boot-starter-tomcat-3.3.13.pom>nexus-aliyun=

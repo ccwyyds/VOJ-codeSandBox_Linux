@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Mar 18 23:50:02 CST 2025
+http\://0.0.0.0/.error=Could not transfer artifact org.eclipse.jetty\:jetty-bom\:pom\:9.4.48.v20220622 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [public (http\://maven.aliyun.com/nexus/content/groups/public/, default, releases+snapshots)]
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1742313001704
+http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742313002164

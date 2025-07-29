@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Mon Mar 24 11:44:40 CST 2025
+http\://maven.aliyun.com/nexus/content/groups/public/.error=Could not transfer artifact org.apache.maven.wagon\:wagon-provider-api\:pom\:3.3.1 from/to nexus-aliyun (http\://maven.aliyun.com/nexus/content/groups/public)\: F\:\\maven\\maven3.9.6\\maven\\maven-repo\\org\\apache\\maven\\wagon\\wagon-provider-api\\3.3.1\\wagon-provider-api-3.3.1.pom.7363845136264210400.tmp -> F\:\\maven\\maven3.9.6\\maven\\maven-repo\\org\\apache\\maven\\wagon\\wagon-provider-api\\3.3.1\\wagon-provider-api-3.3.1.pom
+@default-nexus-aliyun-http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742787880726

@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Mar 18 23:50:08 CST 2025
+http\://0.0.0.0/.error=Could not transfer artifact io.r2dbc\:r2dbc-bom\:pom\:Borca-SR1 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [public (http\://maven.aliyun.com/nexus/content/groups/public/, default, releases+snapshots)]
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1742313007884
+http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742313008334

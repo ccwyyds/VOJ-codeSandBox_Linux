@@ -1,0 +1,4 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jun 10 00:53:49 CST 2025
+parent-join-client-7.17.4.jar>nexus-aliyun=
+parent-join-client-7.17.4.pom>nexus-aliyun=

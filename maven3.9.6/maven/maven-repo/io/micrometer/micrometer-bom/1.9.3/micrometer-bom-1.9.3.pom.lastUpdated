@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Mar 18 23:50:04 CST 2025
+http\://0.0.0.0/.error=Could not transfer artifact io.micrometer\:micrometer-bom\:pom\:1.9.3 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [public (http\://maven.aliyun.com/nexus/content/groups/public/, default, releases+snapshots)]
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1742313004345
+http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742313004802

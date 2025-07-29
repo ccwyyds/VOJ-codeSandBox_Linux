@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Apr 08 21:25:11 CST 2025
+byte-buddy-1.10.22.jar>nexus-aliyun=
+byte-buddy-1.10.22.pom>public=
+byte-buddy-1.10.22.jar>public=
+byte-buddy-1.10.22.pom>nexus-aliyun=

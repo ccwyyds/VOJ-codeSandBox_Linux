@@ -1,0 +1,6 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Jun 10 00:53:45 CST 2025
+xmlbeans-3.1.0.jar>nexus-aliyun=
+xmlbeans-3.1.0.jar>public=
+xmlbeans-3.1.0.pom>nexus-aliyun=
+xmlbeans-3.1.0.pom>public=

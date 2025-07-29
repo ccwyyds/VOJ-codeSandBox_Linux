@@ -1,0 +1,5 @@
+#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
+#Tue Mar 18 23:49:41 CST 2025
+http\://0.0.0.0/.error=Could not transfer artifact com.datastax.oss\:java-driver-bom\:pom\:4.13.0 from/to maven-default-http-blocker (http\://0.0.0.0/)\: Blocked mirror for repositories\: [public (http\://maven.aliyun.com/nexus/content/groups/public/, default, releases+snapshots)]
+@default-maven-default-http-blocker-http\://0.0.0.0/.lastUpdated=1742312981280
+http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742312981676
