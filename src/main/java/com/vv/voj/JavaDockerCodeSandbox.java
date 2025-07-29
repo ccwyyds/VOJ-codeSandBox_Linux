@@ -23,16 +23,17 @@ import org.springframework.util.StopWatch;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class JavaDockerCodeSandbox implements CodeSandbox {
 
     private static final String GLOBAL_CODE_DIR_NAME = "tmpCode";
     private static final String GLOBAL_JAVA_CLASS_NAME = "Main.java";
     private static final String IMAGE_NAME = "openjdk:8-alpine";
+    private static final long TIME_OUT = 5000;
 
     @Override
     public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
-        long t1 = System.currentTimeMillis();
         List<String> inputList = executeCodeRequest.getInputList();
         String code = executeCodeRequest.getCode();
         long start = System.currentTimeMillis();
@@ -46,8 +47,7 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
         String userCodeParentPath = globalCodePathName + File.separator + UUID.randomUUID();
         String userCodePath = userCodeParentPath + File.separator + GLOBAL_JAVA_CLASS_NAME;
         File userCodeFile = FileUtil.writeString(code, userCodePath, StandardCharsets.UTF_8);
-        long t2 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 写入代码耗时: " + (t2 - t1) + " ms");
+
 
         // 2. 编译代码
         String compileCmd = String.format("javac -encoding utf-8 %s", userCodeFile.getAbsolutePath());
@@ -60,13 +60,10 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
         } catch (Exception e) {
             return getErrorResponse(e);
         }
-        long t3 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 编译代码耗时: " + (t3 - t2) + " ms");
 
         // 3. 创建 Docker 客户端
         DockerClient dockerClient = DockerClientBuilder.getInstance().build();
-        long t4 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 创建 Docker 客户端耗时: " + (t4 - t3) + " ms");
+
 
         // 拉取镜像（首次）
         try {
@@ -89,20 +86,18 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
         } catch (Exception e) {
             return errorResponse("拉取 Docker 镜像失败");
         }
-        long t5 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 拉取镜像耗时: " + (t5 - t4) + " ms");
 
         // 4. 创建并启动容器（只一次）
         String containerId;
         try {
             HostConfig hostConfig = new HostConfig()
                     .withBinds(new Bind(userCodeParentPath, new Volume("/app")))
-                    .withMemory(100 * 1024 * 1024L)
-                    .withCpuCount(1L);
-
+                    .withMemory(100 * 1024 * 1024L)//限制最大内存100MB
+                    .withCpuCount(1L);//限制cup核心数
             CreateContainerResponse container = dockerClient.createContainerCmd(IMAGE_NAME)
                     .withHostConfig(hostConfig)
-                    .withNetworkDisabled(true)
+                    .withReadonlyRootfs(true)//禁止向root根目录写文件
+                    .withNetworkDisabled(true)//禁用网络
                     .withReadonlyRootfs(true)
                     .withAttachStderr(true)
                     .withAttachStdout(true)
@@ -114,11 +109,8 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
         } catch (Exception e) {
             return errorResponse("容器启动失败：" + e.getMessage());
         }
-        long t6 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 创建并启动容器耗时: " + (t6 - t5) + " ms");
 
         // 5. 执行代码（多次 docker exec）
-        long t7 = System.currentTimeMillis();
         List<ExecuteMessage> executeMessageList = new ArrayList<>();
         long maxTime = 0;
         long maxMemory = 0;
@@ -153,14 +145,22 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
                         super.onNext(frame);
                     }
                 };
-
+                ExecuteMessage message = new ExecuteMessage();
+                //记录程序执行时间(超时处理)
+                boolean timeOut = false;
                 stopWatch.start();
-                dockerClient.execStartCmd(execId).exec(callback).awaitCompletion();
+                timeOut = dockerClient.execStartCmd(execId).exec(callback).awaitCompletion(TIME_OUT, TimeUnit.MILLISECONDS);
                 stopWatch.stop();
                 long usedTime = stopWatch.getLastTaskTimeMillis();
-                long usedMemory = memoryMonitor.getMaxMemory();
+                if (!timeOut) {
+                    // 超时，强制kill容器
+                    System.out.println("代码运行超时，强制终止容器");
+                    dockerClient.killContainerCmd(containerId).exec();
+                    message.setErrorMessage("代码运行超时");
+                }
 
-                ExecuteMessage message = new ExecuteMessage();
+                //最大内存
+                long usedMemory = memoryMonitor.getMaxMemory();
                 message.setMessage(output.toString().trim());
                 message.setErrorMessage(error.toString().trim());
                 message.setTime(usedTime);
@@ -173,13 +173,10 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
                 return errorResponse("执行失败：" + e.getMessage());
             }
         }
-        long t8 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 执行代码耗时: " + (t8 - t7) + " ms");
 
         memoryMonitor.stop();
 
         // 6. 删除容器
-        long t9_start = System.currentTimeMillis();
         try {
             dockerClient.killContainerCmd(containerId).exec();
         } catch (Exception e) {
@@ -190,11 +187,8 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
         } catch (Exception e) {
             System.err.println("删除容器失败：" + e.getMessage());
         }
-        long t9 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 删除容器耗时: " + (t9 - t9_start) + " ms");
 
         // 7. 生成响应
-        long t10_start = System.currentTimeMillis();
         List<String> outputList = new ArrayList<>();
         for (ExecuteMessage msg : executeMessageList) {
             if (StrUtil.isNotBlank(msg.getErrorMessage())) {
@@ -211,10 +205,8 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
         judgeInfo.setTime(maxTime);
         judgeInfo.setMemory(maxMemory);
         response.setJudgeInfo(judgeInfo);
-        long t10 = System.currentTimeMillis();
-        System.out.println("[耗时日志] 生成响应耗时: " + (t10 - t10_start) + " ms");
 
-        // 8. 清理文件
+//         8. 清理文件
         if (userCodeFile.getParentFile() != null) {
             FileUtil.del(userCodeParentPath);
         }
@@ -240,7 +232,7 @@ public class JavaDockerCodeSandbox implements CodeSandbox {
     public static void main(String[] args) {
         JavaDockerCodeSandbox sandbox = new JavaDockerCodeSandbox();
         ExecuteCodeRequest request = new ExecuteCodeRequest();
-        request.setInputList(Arrays.asList("2 2", "4 3"));
+        request.setInputList(Arrays.asList("3 4", "7 3"));
         String code = ResourceUtil.readStr("testCode/simpleComputeArgs/Main.java", StandardCharsets.UTF_8);
         request.setCode(code);
         request.setLanguage("java");
