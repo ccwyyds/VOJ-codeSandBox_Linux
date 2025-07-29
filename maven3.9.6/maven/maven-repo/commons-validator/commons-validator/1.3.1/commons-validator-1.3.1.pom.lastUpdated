@@ -1,4 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Mon Mar 24 11:44:36 CST 2025
-http\://maven.aliyun.com/nexus/content/groups/public/.error=Could not transfer artifact commons-validator\:commons-validator\:pom\:1.3.1 from/to nexus-aliyun (http\://maven.aliyun.com/nexus/content/groups/public)\: F\:\\maven\\maven3.9.6\\maven\\maven-repo\\commons-validator\\commons-validator\\1.3.1\\commons-validator-1.3.1.pom.5380996022351236286.tmp -> F\:\\maven\\maven3.9.6\\maven\\maven-repo\\commons-validator\\commons-validator\\1.3.1\\commons-validator-1.3.1.pom
-@default-nexus-aliyun-http\://maven.aliyun.com/nexus/content/groups/public/.lastUpdated=1742787876250

@@ -1,6 +1,0 @@
-#NOTE: This is a Maven Resolver internal implementation file, its format can be changed without prior notice.
-#Sun Jul 27 13:53:57 CST 2025
-surefire-logger-api-3.2.2.jar>nexus-aliyun=
-surefire-logger-api-3.2.2.pom>public=
-surefire-logger-api-3.2.2.jar>public=
-surefire-logger-api-3.2.2.pom>nexus-aliyun=
