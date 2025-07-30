@@ -1,7 +1,6 @@
 package com.vv.voj;
 
-import com.vv.voj.model.ExecuteCodeRequest;
-import com.vv.voj.model.ExecuteCodeResponse;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -9,10 +8,7 @@ import com.vv.voj.model.ExecuteCodeResponse;
  * @Author: vv
  * @Date: 2025/7/30 14:57
  */
-
+@Component
 public class JavaNativeCodeSandbox extends JavaCodeSandboxTemplate {
-    @Override
-    public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
-        return super.executeCode(executeCodeRequest);
-    }
+
 }

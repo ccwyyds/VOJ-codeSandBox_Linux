@@ -16,16 +16,16 @@ import com.vv.voj.model.ExecuteCodeResponse;
 import com.vv.voj.model.ExecuteMessage;
 import com.vv.voj.model.JudgeInfo;
 import com.vv.voj.utils.DockerMemoryUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+@Component
 public class JavaDockerCodeSandbox extends JavaCodeSandboxTemplate {
 
     private static final String IMAGE_NAME = "openjdk:8-alpine";
@@ -167,11 +167,6 @@ public class JavaDockerCodeSandbox extends JavaCodeSandboxTemplate {
         return executeMessageList;
     }
 
-
-    @Override
-    public ExecuteCodeResponse executeCode(ExecuteCodeRequest executeCodeRequest) {
-        return super.executeCode(executeCodeRequest);
-    }
 
 
     public static void main(String[] args) {
